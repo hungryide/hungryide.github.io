@@ -1281,13 +1281,18 @@
           <path d="M5.4 4h13.2A2.4 2.4 0 0 1 21 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H5.4A2.4 2.4 0 0 1 3 17.6V6.4A2.4 2.4 0 0 1 5.4 4Z" />
           <path d="m14 8.2-4 7.6" />
         </g>
-        <g id="g-theme">
-          <circle cx="12" cy="12" r="8.4" />
-          <path d="M12 3.6a8.4 8.4 0 0 0 0 16.8Z" fill="currentColor" stroke="none" />
+        <g id="g-import">
+          <path d="M5 3.8h14a2 2 0 0 1 2 2v8.6a2 2 0 0 1-2 2h-8.2L6.4 20.2v-3.8H5a2 2 0 0 1-2-2V5.8a2 2 0 0 1 2-2Z" />
+          <path d="M8.4 8.4h7.2m-2.3-2.2 2.3 2.2-2.3 2.2" />
+          <path d="M15.6 12.2H8.4m2.3-2.2-2.3 2.2 2.3 2.2" />
         </g>
-        <g id="g-windows">
-          <path d="M5.4 4h13.2A2.4 2.4 0 0 1 21 6.4v11.2a2.4 2.4 0 0 1-2.4 2.4H5.4A2.4 2.4 0 0 1 3 17.6V6.4A2.4 2.4 0 0 1 5.4 4Z" />
-          <path d="M3 9.2h18M11.6 9.2V20" />
+        <g id="g-schedule">
+          <circle cx="12" cy="12" r="8.4" />
+          <path d="M12 7.3V12l3.3 2" />
+        </g>
+        <g id="g-acp">
+          <path d="M4.6 4.6h14.8A1.6 1.6 0 0 1 21 6.2v11.6a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.8V6.2a1.6 1.6 0 0 1 1.6-1.6Z" />
+          <path d="m7.4 9.5 2.7 2.6-2.7 2.6M13.4 14.7h3.4" />
         </g>
       </defs>
 
@@ -1308,8 +1313,9 @@
       <symbol id="i-telegram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-telegram" /></symbol>
       <symbol id="i-pet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-pet" /></symbol>
       <symbol id="i-slash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-slash" /></symbol>
-      <symbol id="i-theme" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-theme" /></symbol>
-      <symbol id="i-windows" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-windows" /></symbol>
+      <symbol id="i-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-import" /></symbol>
+      <symbol id="i-schedule" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-schedule" /></symbol>
+      <symbol id="i-acp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><use href="#g-acp" /></symbol>
 
       <!-- The app's own mark, minus its dark plate, so it can take currentColor. -->
       <symbol id="i-hungry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
@@ -1544,6 +1550,14 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <p>제공자 탭에서 엔드포인트를 직접 추가합니다 — 키도, 헤더도, 거기서 불러온 모델 목록도 그 카드 안에서.</p>
             </div>
             <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-acp" /></svg>
+              <h3>Kiro CLI (ACP)</h3>
+              <p>
+                이 컴퓨터의 <code>kiro-cli</code>를 띄워 stdio로 붙습니다. 에이전트가 자기 루프를 돌고, 도구 호출과
+                권한 요청은 여기 대화에 그려집니다. 별도로 <code>kiro-cli login</code>이 필요합니다.
+              </p>
+            </div>
+            <div>
               <svg class="ico" aria-hidden="true"><use href="#i-pool" /></svg>
               <h3>모델 풀</h3>
               <p>한 턴 뒤에 모델을 여러 개 세워 두면, 한도가 소진됐을 때 턴이 끝나는 대신 다음 모델로 넘어갑니다.</p>
@@ -1567,12 +1581,9 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <p>끝난 답변을 요청과 맞춰 한 번 더 읽고, 그 판정을 별도 탭으로 엽니다. 답변 자체는 건드리지 않습니다.</p>
             </div>
             <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-effort" /></svg>
-              <h3>노력 다이얼과 울트라코드</h3>
-              <p>
-                기본값부터 최대까지, 맨 끝 칸이 울트라코드입니다 — 최상단 노력에 더해 병렬 위임으로 계획하라는 지침이
-                대화에 고정됩니다.
-              </p>
+              <svg class="ico" aria-hidden="true"><use href="#i-slash" /></svg>
+              <h3>슬래시 명령</h3>
+              <p><code>/</code>를 치면 승인 모드와 앱 동작이 메뉴로 열립니다.</p>
             </div>
             <div>
               <svg class="ico" aria-hidden="true"><use href="#i-goal" /></svg>
@@ -1583,11 +1594,19 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               </p>
             </div>
             <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-effort" /></svg>
+              <h3>노력 다이얼과 울트라코드</h3>
+              <p>
+                기본값부터 최대까지, 맨 끝 칸이 울트라코드입니다 — 최상단 노력에 더해 병렬 위임으로 계획하라는 지침이
+                대화에 고정됩니다.
+              </p>
+            </div>
+            <div>
               <svg class="ico" aria-hidden="true"><use href="#i-tools" /></svg>
               <h3>도구</h3>
               <p>
-                편집 · 영속 셸 · 검색 · 웹 · MCP, 그리고 언어 서버의 진단 · 정의 · 참조. 서버가 없으면 설치 명령과
-                버튼이 함께 뜹니다.
+                편집 · 영속 셸 · 검색 · 웹 · 스킬 · MCP, 그리고 언어 서버의 진단 · 정의 · 참조. 서버가 없으면 설치
+                명령과 버튼이 함께 뜹니다.
               </p>
             </div>
             <div>
@@ -1596,6 +1615,22 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <p>
                 도구 탭에서 커밋과 푸시. 메시지는 diff를 보고 씁니다. 커밋 메시지를 쓸 모델은 설정 → 도구에서 대화와
                 따로 지정합니다.
+              </p>
+            </div>
+            <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-import" /></svg>
+              <h3>다른 도구의 대화 이어하기</h3>
+              <p>
+                Claude Code · Codex가 이 폴더에서 진행한 대화를 골라 여기서 이어갑니다. 여기서 한 턴은 원래 파일에
+                다시 기록되고, 저쪽에서 이어간 턴도 가져옵니다.
+              </p>
+            </div>
+            <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-schedule" /></svg>
+              <h3>예약 세션</h3>
+              <p>
+                시각을 정하거나 다른 세션이 끝난 뒤로 걸어 둡니다. 그때까지 적어 둔 메시지는 대기열에 머물고, 조건이
+                맞으면 순서대로 나갑니다.
               </p>
             </div>
             <div>
@@ -1612,24 +1647,6 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <svg class="ico" aria-hidden="true"><use href="#i-pet" /></svg>
               <h3>펫</h3>
               <p>턴을 데스크톱에서 알려 주는 펫. Codex용으로 만들어진 펫 팩도 그대로 씁니다.</p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-slash" /></svg>
-              <h3>슬래시 명령</h3>
-              <p><code>/</code>를 치면 승인 모드와 앱 동작이 메뉴로 열립니다.</p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-theme" /></svg>
-              <h3>테마와 언어</h3>
-              <p>hungry · Codex · Claude Code · Cursor, 또는 켤 때마다 하나를 뽑는 무작위. 한국어와 English.</p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-windows" /></svg>
-              <h3>Windows 최적화</h3>
-              <p>
-                대화의 셸은 PowerShell, 에이전트와 MCP 프로그램은 Windows가 실제로 설치하는 자리에서 찾고, Windows
-                11에서는 창 뒤로 아크릴.
-              </p>
             </div>
           </div>
         </div>
@@ -1836,6 +1853,15 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               </p>
             </div>
             <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-acp" /></svg>
+              <h3>Kiro CLI (ACP)</h3>
+              <p>
+                Spawns the <code>kiro-cli</code> on this machine and speaks to it over stdio. The agent runs its own
+                loop; its tool calls and permission asks are drawn in the conversation here. It needs its own
+                <code>kiro-cli login</code>.
+              </p>
+            </div>
+            <div>
               <svg class="ico" aria-hidden="true"><use href="#i-pool" /></svg>
               <h3>Model pools</h3>
               <p>
@@ -1865,12 +1891,9 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               </p>
             </div>
             <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-effort" /></svg>
-              <h3>Effort dial and ultracode</h3>
-              <p>
-                From default up to the top the model actually takes, with ultracode as the last notch: top effort plus
-                standing guidance to plan the work as parallel delegates.
-              </p>
+              <svg class="ico" aria-hidden="true"><use href="#i-slash" /></svg>
+              <h3>Slash commands</h3>
+              <p>Typing <code>/</code> opens the approval modes and app actions as a menu.</p>
             </div>
             <div>
               <svg class="ico" aria-hidden="true"><use href="#i-goal" /></svg>
@@ -1881,10 +1904,18 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               </p>
             </div>
             <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-effort" /></svg>
+              <h3>Effort dial and ultracode</h3>
+              <p>
+                From default up to the top the model actually takes, with ultracode as the last notch: top effort plus
+                standing guidance to plan the work as parallel delegates.
+              </p>
+            </div>
+            <div>
               <svg class="ico" aria-hidden="true"><use href="#i-tools" /></svg>
               <h3>Tools</h3>
               <p>
-                Edits, a persistent shell, search, web, MCP — plus language-server diagnostics, definition and
+                Edits, a persistent shell, search, web, skills, MCP — plus language-server diagnostics, definition and
                 references, with an install prompt when a project's server is missing.
               </p>
             </div>
@@ -1894,6 +1925,22 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <p>
                 Commit and push from the tools tab, with the message written from the diff. The model that writes it is
                 picked separately from the conversation's, under Settings → Tools.
+              </p>
+            </div>
+            <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-import" /></svg>
+              <h3>Continue a Claude Code or Codex session</h3>
+              <p>
+                Pick a conversation either tool had in this folder and carry on with it here. Turns taken here are
+                written back to its own file, and turns taken over there are pulled in.
+              </p>
+            </div>
+            <div>
+              <svg class="ico" aria-hidden="true"><use href="#i-schedule" /></svg>
+              <h3>Scheduled sessions</h3>
+              <p>
+                Start a session at a set time, or after other sessions have finished. Messages typed before then wait in
+                its queue and go out in order once the condition is met.
               </p>
             </div>
             <div>
@@ -1913,27 +1960,6 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
               <svg class="ico" aria-hidden="true"><use href="#i-pet" /></svg>
               <h3>Desktop pet</h3>
               <p>A small window that signals turns on the desktop. Pet packs made for Codex drop straight in.</p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-slash" /></svg>
-              <h3>Slash commands</h3>
-              <p>Typing <code>/</code> opens the approval modes and app actions as a menu.</p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-theme" /></svg>
-              <h3>Themes and languages</h3>
-              <p>
-                hungry, Codex, Claude Code, Cursor — or random, which draws one each time the app starts. English and
-                Korean.
-              </p>
-            </div>
-            <div>
-              <svg class="ico" aria-hidden="true"><use href="#i-windows" /></svg>
-              <h3>Windows</h3>
-              <p>
-                PowerShell as the conversation's shell, agent and MCP programs found where Windows actually installs
-                them, acrylic behind the window on Windows 11.
-              </p>
             </div>
           </div>
         </div>
