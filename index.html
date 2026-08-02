@@ -317,6 +317,647 @@
         line-height: 1.1;
       }
 
+      /* ---------- the app, drawn rather than photographed ---------- */
+
+      /*
+        A screenshot goes stale on its own schedule and only ever holds one of
+        everything: one palette, one language, one window width, one pixel
+        density. The app's chrome is HTML and CSS to begin with, so redrawing it
+        here is cheaper than photographing it — and this copy is written out in
+        both languages like the rest of the page, folds down to a phone, and
+        answers `prefers-reduced-motion`.
+
+        The palette is the app's own `hungry` theme, copied from
+        src/renderer/src/styles/tokens.css and kept local to `.shot` so the
+        site's own light scheme is untouched. Every theme in the app is dark, and
+        a light-mode visitor here is looking at a picture of a window rather than
+        at more page.
+
+        It is a picture and it is marked as one: `role="img"` with a label, so a
+        screen reader is told what the figure shows instead of reading a fake
+        session list as if it were content.
+      */
+
+      .shot {
+        --s-bg: #1c1c1c;
+        --s-panel: #171717;
+        --s-panel-alt: #262626;
+        --s-border: #2e2e2e;
+        --s-text: #ededeb;
+        --s-muted: #8d8d87;
+        --s-accent: #a78bfa;
+        --s-accent-soft: rgba(167, 139, 250, 0.16);
+        --s-accent-line: rgba(167, 139, 250, 0.5);
+        --s-ok: #7d9b6a;
+
+        margin-top: clamp(38px, 6vw, 60px);
+        border-radius: 12px;
+        background: var(--s-bg);
+        color: var(--s-text);
+        /* The app runs on the platform's UI face, not on the page's webfont. */
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+        font-size: 11.5px;
+        line-height: 1.55;
+        letter-spacing: normal;
+        overflow: hidden;
+        box-shadow:
+          0 0 0 1px rgba(0, 0, 0, 0.5),
+          0 26px 60px -18px rgba(17, 17, 20, 0.5);
+        user-select: none;
+      }
+
+      /* Rows are rows. Every line in here is a fixed part beside one part that
+         shrinks, and the shrinking part ends in an ellipsis — the same rule the
+         phone page is built on, for the same reason. */
+      .shot .row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+      }
+
+      .shot .grow {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .shot .clip {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .shot .mono {
+        font-family: var(--mono);
+        font-size: 0.92em;
+        font-style: normal;
+      }
+
+      /* titlebar */
+
+      .shot-bar {
+        height: 34px;
+        padding: 0 10px;
+        background: var(--s-panel);
+        border-bottom: 1px solid var(--s-border);
+      }
+
+      .shot-dots {
+        display: inline-flex;
+        gap: 6px;
+        margin-right: 4px;
+      }
+
+      .shot-dots i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #3a3a3a;
+      }
+
+      .shot-brand {
+        flex: 0 0 auto;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        /* The page breaks anywhere by default (`overflow-wrap: anywhere` on
+           body), which turned the wordmark into "hun / gry" at 390px. Nothing in
+           a window's chrome wraps. */
+        white-space: nowrap;
+      }
+
+      .shot-crumbs {
+        color: var(--s-muted);
+        font-size: 10.5px;
+      }
+
+      .shot-chip {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 8px;
+        border-radius: 6px;
+        color: var(--s-muted);
+        font-size: 10.5px;
+        white-space: nowrap;
+      }
+
+      .shot-chip.on {
+        background: var(--s-accent-soft);
+        color: var(--s-accent);
+      }
+
+      /* the three panes */
+
+      .shot-body {
+        display: flex;
+        min-height: 0;
+        /* A window, not a page: the height is the frame's, and each pane fills
+           it. Without one the transcript would be as tall as its own text and
+           the composer would float in the middle of the figure. */
+        height: 396px;
+      }
+
+      .shot-side {
+        flex: 0 0 164px;
+        width: 164px;
+        display: flex;
+        flex-direction: column;
+        background: var(--s-panel);
+        border-right: 1px solid var(--s-border);
+        overflow: hidden;
+      }
+
+      .shot-pane-head {
+        flex: 0 0 auto;
+        height: 30px;
+        padding: 0 9px;
+        border-bottom: 1px solid var(--s-border);
+        color: var(--s-muted);
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+      }
+
+      .shot-proj {
+        border-bottom: 1px solid var(--s-border);
+      }
+
+      .shot-row {
+        padding: 6px 9px;
+      }
+
+      .shot-row.sess {
+        padding-left: 24px;
+        color: var(--s-muted);
+      }
+
+      .shot-row.proj {
+        font-weight: 600;
+      }
+
+      .shot-row.active {
+        background: var(--s-accent-soft);
+        box-shadow: inset 2px 0 0 var(--s-accent);
+        color: var(--s-text);
+      }
+
+      .shot-chev {
+        flex: 0 0 9px;
+        color: var(--s-muted);
+        font-size: 8px;
+      }
+
+      .shot-mark {
+        flex: 0 0 auto;
+        font-size: 10px;
+      }
+
+      .shot-mark.ok {
+        color: var(--s-ok);
+      }
+
+      .shot-mark.wait {
+        padding: 0 4px;
+        border: 1px solid var(--s-border);
+        border-radius: 8px;
+        color: var(--s-muted);
+        font-size: 9px;
+      }
+
+      /* The one thing in the figure that is genuinely in motion, because it is
+         the one thing in the app that means "still going". */
+      .shot-spin {
+        flex: 0 0 auto;
+        width: 9px;
+        height: 9px;
+        border: 1.5px solid var(--s-border);
+        border-top-color: var(--s-accent);
+        border-radius: 50%;
+        animation: shot-spin 0.7s linear infinite;
+      }
+
+      @keyframes shot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* transcript */
+
+      .shot-main {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .shot-chat-head {
+        flex: 0 0 auto;
+        padding: 8px 14px;
+        border-bottom: 1px solid var(--s-border);
+      }
+
+      .shot-chat-head b {
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .shot-chat-head .path {
+        color: var(--s-muted);
+        font-size: 10px;
+      }
+
+      .shot-scroll {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        /* The transcript is scrolled to its end, as it is while a turn runs:
+           what the figure has to show is the newest tool line and the composer,
+           not the top of the conversation. */
+        overflow: hidden;
+        justify-content: flex-end;
+        /*
+          Whatever does not fit fades out at the top edge instead of being sliced.
+          The figure has a fixed height and its text does not — a different UI
+          font, a longer translation or a larger default size all move the fold —
+          and a tag cut through the middle reads as a broken render rather than as
+          a conversation that continues above. When the turn does fit, the flex-end
+          alignment leaves this band empty and the fade has nothing to act on.
+        */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26px);
+        mask-image: linear-gradient(to bottom, transparent 0, #000 26px);
+      }
+
+      .shot-msg {
+        display: flex;
+        gap: 9px;
+        min-width: 0;
+      }
+
+      .shot-av {
+        flex: 0 0 21px;
+        width: 21px;
+        height: 21px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: var(--s-panel-alt);
+        color: var(--s-muted);
+        font-size: 9.5px;
+        font-weight: 700;
+      }
+
+      .shot-msg.user .shot-av {
+        background: var(--s-accent-soft);
+        color: var(--s-accent);
+      }
+
+      .shot-bubble {
+        min-width: 0;
+      }
+
+      .shot-who {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 2px;
+        color: var(--s-muted);
+        font-size: 9.5px;
+      }
+
+      .shot-tag {
+        padding: 0 5px;
+        border: 1px solid var(--s-border);
+        border-radius: 8px;
+        white-space: nowrap;
+      }
+
+      .shot-tag.ultra {
+        border-color: var(--s-accent-line);
+        color: var(--s-accent);
+      }
+
+      /* tool calls under a reply */
+
+      .shot-tools {
+        list-style: none;
+        margin: 7px 0;
+        padding: 0 0 0 8px;
+        border-left: 2px solid var(--s-border);
+        color: var(--s-muted);
+      }
+
+      .shot-tools li {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+        padding: 1px 0;
+      }
+
+      .shot-tools .g {
+        flex: 0 0 10px;
+        font-size: 10px;
+      }
+
+      .shot-out {
+        margin: 3px 0 3px 17px;
+        padding: 5px 8px;
+        border-left: 2px solid var(--s-border);
+        border-radius: 0 6px 6px 0;
+        background: var(--s-panel-alt);
+        color: var(--s-muted);
+        font-family: var(--mono);
+        font-size: 10px;
+        line-height: 1.5;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* composer */
+
+      .shot-composer {
+        flex: 0 0 auto;
+        padding: 10px 14px 12px;
+        border-top: 1px solid var(--s-border);
+      }
+
+      .shot-comp-inner {
+        border: 1px solid var(--s-border);
+        border-radius: 10px;
+        background: var(--s-panel);
+        padding: 7px 9px;
+      }
+
+      .shot-modelline {
+        padding-bottom: 7px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid var(--s-border);
+      }
+
+      .shot-sel {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        height: 21px;
+        padding: 0 7px;
+        border: 1px solid var(--s-border);
+        border-radius: 6px;
+        background: var(--s-panel-alt);
+        color: var(--s-muted);
+        font-size: 10px;
+        max-width: 190px;
+      }
+
+      /* Native selects clip their own text without an ellipsis, so the app puts
+         one on them; the figure keeps the caret they draw beside it. */
+      .shot-sel::after {
+        content: "▾";
+        color: var(--s-muted);
+        font-size: 7px;
+      }
+
+      .shot-sel.plain {
+        background: transparent;
+      }
+
+      .shot-pill {
+        padding: 1px 6px;
+        border: 1px solid var(--s-border);
+        border-radius: 20px;
+        color: var(--s-muted);
+        font-size: 9.5px;
+        white-space: nowrap;
+      }
+
+      .shot-send {
+        display: inline-grid;
+        place-items: center;
+        width: 21px;
+        height: 21px;
+        border: 1px solid var(--s-border);
+        border-radius: 6px;
+        color: var(--s-muted);
+        font-size: 10px;
+      }
+
+      /*
+        The effort chip at its last notch. Lit rather than merely coloured, which
+        is the app's own distinction: ultracode changes how the turn is run, so it
+        cannot look like one more level on the dial.
+      */
+      .shot-effort {
+        display: inline-flex;
+        align-items: center;
+        height: 21px;
+        padding: 0 9px;
+        border: 1px solid var(--s-accent-line);
+        border-radius: 6px;
+        color: var(--s-accent);
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        background:
+          linear-gradient(100deg, transparent 35%, var(--s-accent-soft) 50%, transparent 65%)
+          var(--s-accent-soft);
+        background-size: 220% 100%;
+        animation: shot-sweep 3.2s ease-in-out infinite;
+      }
+
+      @keyframes shot-sweep {
+        from {
+          background-position: 120% 0;
+        }
+        to {
+          background-position: -20% 0;
+        }
+      }
+
+      .shot-input {
+        color: var(--s-muted);
+        padding: 2px 0 4px;
+      }
+
+      .shot-caret {
+        display: inline-block;
+        width: 1px;
+        height: 1.1em;
+        margin-right: 3px;
+        vertical-align: -0.2em;
+        background: var(--s-accent);
+        animation: shot-blink 1.1s steps(1) infinite;
+      }
+
+      @keyframes shot-blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .shot-foot {
+        margin-top: 6px;
+      }
+
+      .shot-meter {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 20px;
+        padding: 0 7px;
+        border: 1px solid var(--s-border);
+        border-radius: 6px;
+        color: var(--s-muted);
+        font-size: 9.5px;
+        white-space: nowrap;
+      }
+
+      .shot-meter i {
+        display: block;
+        width: 42px;
+        height: 3px;
+        border-radius: 3px;
+        background: var(--s-panel-alt);
+      }
+
+      .shot-meter i::before {
+        content: "";
+        display: block;
+        width: 38%;
+        height: 100%;
+        border-radius: 3px;
+        background: var(--s-muted);
+      }
+
+      /* right rail */
+
+      .shot-rail {
+        flex: 0 0 176px;
+        width: 176px;
+        display: flex;
+        flex-direction: column;
+        background: var(--s-panel-alt);
+        border-left: 1px solid var(--s-border);
+        overflow: hidden;
+      }
+
+      .shot-rail-tabs {
+        flex: 0 0 auto;
+        gap: 2px;
+        padding: 5px 6px;
+        border-bottom: 1px solid var(--s-border);
+        /* Three tabs at their longest label are wider than the rail in English.
+           They clip here the way they clip in the app rather than widening the
+           pane, which would move the transcript for a row of tabs. */
+        overflow: hidden;
+      }
+
+      .shot-rail-tabs span {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 7px;
+        border-radius: 8px;
+        color: var(--s-muted);
+        font-size: 10px;
+        white-space: nowrap;
+      }
+
+      .shot-rail-tabs span.on {
+        background: rgba(127, 127, 127, 0.16);
+        color: var(--s-accent);
+      }
+
+      .shot-rail-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        overflow: hidden;
+      }
+
+      .shot-card {
+        padding: 7px 8px;
+        border: 1px solid var(--s-border);
+        border-radius: 8px;
+        background: var(--s-panel);
+      }
+
+      .shot-card .q {
+        display: block;
+        color: var(--s-text);
+        font-size: 10.5px;
+        line-height: 1.45;
+        /* Two lines, then an ellipsis: the card is a row in a list, and a long
+           question must not make it the tallest thing in the rail. */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .shot-card .m {
+        margin-top: 4px;
+        color: var(--s-muted);
+        font-size: 9.5px;
+      }
+
+      .shot-card .m .ok {
+        color: var(--s-ok);
+      }
+
+      /*
+        The figure is three panes wide, and there is no width at which all three
+        survive a phone. The rail goes first — it reports on work rather than
+        holding any — and the session list follows it, leaving the transcript and
+        the composer, which are what the picture is of.
+      */
+      @media (max-width: 840px) {
+        .shot-rail {
+          display: none;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .shot-side {
+          display: none;
+        }
+
+        /* The titlebar's other two buttons go with it: at this width they are
+           three words competing with the path for one row, and the one that is
+           on says what the row is. */
+        .shot-chip:not(.on) {
+          display: none;
+        }
+
+        .shot {
+          font-size: 10.5px;
+        }
+
+        .shot-body {
+          height: 320px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .shot-effort {
+          animation: none;
+          background: var(--s-accent-soft);
+        }
+
+        .shot-spin,
+        .shot-caret {
+          animation: none;
+        }
+      }
+
       /* ---------- sections ---------- */
 
       section {
@@ -710,6 +1351,140 @@
     <main id="main-ko" data-doc="ko" lang="ko">
       <div class="hero page">
         <h1>Hungry는 무료 코딩 AI를 위한 코딩 에이전트입니다.</h1>
+
+        <!--
+          Straight to the commands. A downward arrow rather than the outward one
+          the Node.js button carries: that link leaves the site and this one moves
+          within the page, and the two should not be drawn as the same act.
+        -->
+        <a class="btn" href="#install-ko">
+          설치와 실행
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M8 3v10M3.6 8.6 8 13l4.4-4.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <!--
+          The window, drawn. Marked as one picture rather than left as markup:
+          a screen reader given this tree would read a made-up session list and
+          a made-up reply as if they were part of the page.
+        -->
+        <div
+          class="shot"
+          role="img"
+          aria-label="hungry 창의 모습. 왼쪽에 프로젝트와 세션 목록, 가운데에 도구 호출이 딸린 대화와 모델 바가 붙은 입력창, 오른쪽에 진행 중인 위임 패널."
+        >
+          <div class="shot-bar row">
+            <span class="shot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="shot-brand">hungry</span>
+            <span class="shot-crumbs clip">my-app · ~/code/my-app</span>
+            <span class="grow"></span>
+            <span class="shot-chip">도구</span>
+            <span class="shot-chip">터미널</span>
+            <span class="shot-chip on">설정</span>
+          </div>
+
+          <div class="shot-body">
+            <div class="shot-side">
+              <div class="shot-pane-head row"><span>프로젝트</span><span class="grow"></span><span>+</span></div>
+
+              <div class="shot-proj">
+                <div class="shot-row row proj">
+                  <span class="shot-chev">▾</span><span class="clip">my-app</span><span class="grow"></span><span>+</span>
+                </div>
+                <div class="shot-row row sess active">
+                  <span class="clip">인증을 새 API로</span><span class="grow"></span><span class="shot-spin"></span>
+                </div>
+                <div class="shot-row row sess">
+                  <span class="clip">스냅샷 테스트</span><span class="grow"></span><span class="shot-mark ok">✓</span>
+                </div>
+                <div class="shot-row row sess">
+                  <span class="clip">릴리스 노트</span><span class="grow"></span><span class="shot-mark wait">2</span>
+                </div>
+              </div>
+
+              <div class="shot-proj">
+                <div class="shot-row row proj">
+                  <span class="shot-chev">▸</span><span class="clip">docs-site</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="shot-main">
+              <div class="shot-chat-head row">
+                <b class="clip">인증을 새 API로</b><span class="grow"></span><span class="path clip">~/code/my-app</span>
+              </div>
+
+              <div class="shot-scroll">
+                <div class="shot-msg user">
+                  <span class="shot-av">나</span>
+                  <div class="shot-bubble">
+                    <div class="shot-who">나</div>
+                    <p>토큰 갱신을 새 엔드포인트로 옮겨 주세요. 부르는 곳도 같이요.</p>
+                  </div>
+                </div>
+
+                <div class="shot-msg">
+                  <span class="shot-av">h</span>
+                  <div class="shot-bubble">
+                    <div class="shot-who">
+                      <span class="clip">hungry · qwen3-coder</span>
+                      <span class="shot-tag ultra">울트라코드</span>
+                      <span class="shot-tag">매우 높음</span>
+                    </div>
+                    <p>갱신 경로와 그것을 부르는 다섯 곳을 먼저 읽었습니다.</p>
+                    <ul class="shot-tools">
+                      <li><span class="g">✓</span><span class="clip">read_file <em class="mono">src/auth/refresh.ts</em></span></li>
+                      <li><span class="g">✓</span><span class="clip">grep <em class="mono">refreshToken</em></span></li>
+                      <li><span class="g">✓</span><span class="clip">edit_file <em class="mono">src/auth/refresh.ts</em></span></li>
+                      <li><span class="shot-spin"></span><span class="clip">run_command <em class="mono">pnpm check:auth</em></span></li>
+                    </ul>
+                    <p class="shot-out">↳ auth ✓ 24 passed · 갱신 경로 재시도 1회</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shot-composer">
+                <div class="shot-comp-inner">
+                  <div class="shot-modelline row">
+                    <span class="shot-sel"><span class="clip">로컬 · qwen3-coder</span></span>
+                    <span class="shot-pill">128k</span>
+                    <span class="shot-effort">울트라코드</span>
+                    <span class="grow"></span>
+                    <span class="shot-send">↑</span>
+                  </div>
+                  <p class="shot-input"><span class="shot-caret"></span>무엇을 할까요?</p>
+                  <div class="shot-foot row">
+                    <span class="shot-sel plain"><span class="clip">검토</span></span>
+                    <span class="shot-meter">컨텍스트 38%<i></i></span>
+                    <span class="grow"></span>
+                    <span class="shot-sel plain"><span class="clip">자동</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shot-rail">
+              <div class="shot-rail-tabs row">
+                <span class="on">위임 2</span><span>계획</span><span>목표</span>
+              </div>
+              <div class="shot-rail-body">
+                <div class="shot-card">
+                  <span class="q">갱신 토큰을 부르는 곳을 전부 찾아 주세요</span>
+                  <div class="m row"><span>12초</span><span class="grow"></span><span>도구 4</span></div>
+                </div>
+                <div class="shot-card">
+                  <span class="q">테스트 픽스처가 옛 응답 모양을 쓰는지</span>
+                  <div class="m row"><span>8초</span><span class="grow"></span><span>도구 3</span></div>
+                </div>
+                <div class="shot-card">
+                  <span class="q">설정 스키마에 만료 필드가 있는지</span>
+                  <div class="m row"><span class="ok">완료</span><span class="grow"></span><span>도구 2</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <section>
@@ -873,6 +1648,132 @@ npm install -g ./hungry-0.2.0.tgz"><span class="p">curl</span> -LO https://hungr
     <main id="main-en" data-doc="en" lang="en">
       <div class="hero page">
         <h1>Hungry is the coding agent for free coding AI.</h1>
+
+        <!-- Same button, same arrow: this one stays on the page. -->
+        <a class="btn" href="#install-en">
+          Install and run
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M8 3v10M3.6 8.6 8 13l4.4-4.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <!-- Same figure, same reason it is one `role="img"`. -->
+        <div
+          class="shot"
+          role="img"
+          aria-label="The hungry window: projects and sessions down the left, a conversation with its tool calls and a model bar above the composer in the middle, and the delegates currently out on the right."
+        >
+          <div class="shot-bar row">
+            <span class="shot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="shot-brand">hungry</span>
+            <span class="shot-crumbs clip">my-app · ~/code/my-app</span>
+            <span class="grow"></span>
+            <span class="shot-chip">Tools</span>
+            <span class="shot-chip">Terminal</span>
+            <span class="shot-chip on">Settings</span>
+          </div>
+
+          <div class="shot-body">
+            <div class="shot-side">
+              <div class="shot-pane-head row"><span>Projects</span><span class="grow"></span><span>+</span></div>
+
+              <div class="shot-proj">
+                <div class="shot-row row proj">
+                  <span class="shot-chev">▾</span><span class="clip">my-app</span><span class="grow"></span><span>+</span>
+                </div>
+                <div class="shot-row row sess active">
+                  <span class="clip">Auth on the new API</span><span class="grow"></span><span class="shot-spin"></span>
+                </div>
+                <div class="shot-row row sess">
+                  <span class="clip">Snapshot tests</span><span class="grow"></span><span class="shot-mark ok">✓</span>
+                </div>
+                <div class="shot-row row sess">
+                  <span class="clip">Release notes</span><span class="grow"></span><span class="shot-mark wait">2</span>
+                </div>
+              </div>
+
+              <div class="shot-proj">
+                <div class="shot-row row proj">
+                  <span class="shot-chev">▸</span><span class="clip">docs-site</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="shot-main">
+              <div class="shot-chat-head row">
+                <b class="clip">Auth on the new API</b><span class="grow"></span><span class="path clip">~/code/my-app</span>
+              </div>
+
+              <div class="shot-scroll">
+                <div class="shot-msg user">
+                  <span class="shot-av">Y</span>
+                  <div class="shot-bubble">
+                    <div class="shot-who">You</div>
+                    <p>Move token refresh to the new endpoint, callers included.</p>
+                  </div>
+                </div>
+
+                <div class="shot-msg">
+                  <span class="shot-av">h</span>
+                  <div class="shot-bubble">
+                    <div class="shot-who">
+                      <span class="clip">hungry · qwen3-coder</span>
+                      <span class="shot-tag ultra">ultracode</span>
+                      <span class="shot-tag">very high</span>
+                    </div>
+                    <p>Read the refresh path and the five places that call it first.</p>
+                    <ul class="shot-tools">
+                      <li><span class="g">✓</span><span class="clip">read_file <em class="mono">src/auth/refresh.ts</em></span></li>
+                      <li><span class="g">✓</span><span class="clip">grep <em class="mono">refreshToken</em></span></li>
+                      <li><span class="g">✓</span><span class="clip">edit_file <em class="mono">src/auth/refresh.ts</em></span></li>
+                      <li><span class="shot-spin"></span><span class="clip">run_command <em class="mono">pnpm check:auth</em></span></li>
+                    </ul>
+                    <p class="shot-out">↳ auth ✓ 24 passed · refresh path retried once</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="shot-composer">
+                <div class="shot-comp-inner">
+                  <div class="shot-modelline row">
+                    <span class="shot-sel"><span class="clip">Local · qwen3-coder</span></span>
+                    <span class="shot-pill">128k</span>
+                    <span class="shot-effort">ultracode</span>
+                    <span class="grow"></span>
+                    <span class="shot-send">↑</span>
+                  </div>
+                  <p class="shot-input"><span class="shot-caret"></span>What should we do?</p>
+                  <div class="shot-foot row">
+                    <span class="shot-sel plain"><span class="clip">Review</span></span>
+                    <span class="shot-meter">Context 38%<i></i></span>
+                    <span class="grow"></span>
+                    <span class="shot-sel plain"><span class="clip">Auto</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shot-rail">
+              <div class="shot-rail-tabs row">
+                <span class="on">Delegates 2</span><span>Plan</span><span>Goal</span>
+              </div>
+              <div class="shot-rail-body">
+                <div class="shot-card">
+                  <span class="q">Find every caller of the refresh token</span>
+                  <div class="m row"><span>12s</span><span class="grow"></span><span>4 calls</span></div>
+                </div>
+                <div class="shot-card">
+                  <span class="q">Do the test fixtures use the old response shape</span>
+                  <div class="m row"><span>8s</span><span class="grow"></span><span>3 calls</span></div>
+                </div>
+                <div class="shot-card">
+                  <span class="q">Does the config schema carry an expiry field</span>
+                  <div class="m row"><span class="ok">done</span><span class="grow"></span><span>2 calls</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <section>
